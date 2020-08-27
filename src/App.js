@@ -6,6 +6,7 @@ import Contact from "./component/contact/Contact";
 
 import Navigation from "./component/navigation/Navigation";
 import { Route, Switch } from "react-router-dom";
+import Jeopardy from "./component/jeopardy/Jeopardy";
 import Page404 from "./component/page404/Page404";
 
 class App extends Component {
@@ -26,6 +27,7 @@ class App extends Component {
           />
           <Route path="/clock" component={Clock} />
           <Route path="/contact" component={Contact} />
+          <Route path="/jeopardy" component={Jeopardy} />
           <Route>
             <Page404 />
           </Route>
