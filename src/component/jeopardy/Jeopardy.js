@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 //import our service
 import JeopardyService from "../jeopardyService/JeopardyService";
+import Displajeopardy from "../displayjeopardy/Displayjeopardy";
 class Jeopardy extends Component {
   //set our initial state and set up our service as this.client on this component
   constructor(props) {
@@ -21,6 +22,15 @@ class Jeopardy extends Component {
       });
     });
   }
+
+  //get a new random question from the API and add it to the data object in state
+  // getNewCategory() {
+  // return this.client.getCategory().then((result) => {
+  // this.setState({
+  // data: result.data[0],
+  //});
+  //});
+  //}
   //onclick user submit answer
   handleSubmit = (event) => {
     const answer1 = this.state.ans;
@@ -41,6 +51,7 @@ class Jeopardy extends Component {
       score,
       ans: "",
     });
+
     this.getNewQuestion();
   };
 
@@ -50,6 +61,10 @@ class Jeopardy extends Component {
 
   //when the component mounts, get a the first question
   componentDidMount() {
+    // let category = this.state.date.category;
+    //let count = 3;
+    //let question = this.getNewQuestion() / category / count;
+    //return question;
     this.getNewQuestion();
   }
   //display the results on the screen
@@ -63,22 +78,13 @@ class Jeopardy extends Component {
     }
     return (
       <div>
-        <h2>Category :{this.state.data.category.title}</h2>
-
-        <h2>Question :{this.state.data.question}</h2>
-        <h2>
-          Answer:
-          <input
-            type="text"
-            name="ans"
-            value={this.state.ans}
-            onChange={this.handleChange}
-          />
-        </h2>
-        <button onClick={this.handleSubmit}>Submit</button>
-
-        <h2>Point Value :{this.state.data.value}</h2>
-        <h2>Score :{this.state.score}</h2>
+        <Displajeopardy
+          score={this.state.score}
+          data={this.state.data}
+          ans={this.state.ans}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+        />
       </div>
     );
   }
