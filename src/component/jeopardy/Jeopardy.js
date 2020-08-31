@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 //import our service
 import JeopardyService from "../jeopardyService/JeopardyService";
-import Displajeopardy from "../displayjeopardy/Displayjeopardy";
+import Displayjeopardy from "../displayjeopardy/Displayjeopardy";
 class Jeopardy extends Component {
   //set our initial state and set up our service as this.client on this component
   constructor(props) {
@@ -12,6 +12,7 @@ class Jeopardy extends Component {
       ans: "",
       data: {},
       score: 0,
+      question: [],
     };
   }
   //get a new random question from the API and add it to the data object in state
@@ -23,14 +24,15 @@ class Jeopardy extends Component {
     });
   }
 
-  //get a new random question from the API and add it to the data object in state
-  // getNewCategory() {
-  // return this.client.getCategory().then((result) => {
-  // this.setState({
-  // data: result.data[0],
-  //});
-  //});
-  //}
+  //get a new random category from the API and add it to the data object in state
+
+  get3Questions() {
+    return this.client.get3Questions().then((result) => {
+      this.setState({
+        question: result.data,
+      });
+    });
+  }
   //onclick user submit answer
   handleSubmit = (event) => {
     const answer1 = this.state.ans;
@@ -56,16 +58,14 @@ class Jeopardy extends Component {
   };
 
   handleChange = (event) => {
+    console.log(event.target.value);
     this.setState({ ans: event.target.value });
   };
 
   //when the component mounts, get a the first question
   componentDidMount() {
-    // let category = this.state.date.category;
-    //let count = 3;
-    //let question = this.getNewQuestion() / category / count;
-    //return question;
     this.getNewQuestion();
+    this.get3Questions();
   }
   //display the results on the screen
   render() {
@@ -76,12 +76,14 @@ class Jeopardy extends Component {
         </div>
       );
     }
+
     return (
       <div>
-        <Displajeopardy
+        <Displayjeopardy
           score={this.state.score}
-          data={this.state.data}
+          data1={this.state.data}
           ans={this.state.ans}
+          question={this.state.questions}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
         />
